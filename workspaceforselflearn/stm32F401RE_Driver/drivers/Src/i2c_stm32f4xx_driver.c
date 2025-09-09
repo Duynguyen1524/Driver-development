@@ -540,3 +540,49 @@ void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle){
 		}
 }
 
+void I2C_CloseReceiveData(I2C_Handle_t *pI2CHandle)
+{
+	//Implement the code to disable ITBUFEN Control Bit
+	pI2CHandle->pI2Cx->CR2 &= ~( 1 << I2C_CR2_ITBUFEN);
+
+	//Implement the code to disable ITEVFEN Control Bit
+	pI2CHandle->pI2Cx->CR2 &= ~( 1 << I2C_CR2_ITEVTEN);
+
+	pI2CHandle->TxRxState = I2C_READY;
+	pI2CHandle->pRxBuffer = NULL;
+	pI2CHandle->RxLen = 0;
+	pI2CHandle->RxSize = 0;
+
+	if(pI2CHandle->I2C_Config.I2C_AckControl == I2C_ACK_ENABLE)
+	{
+		I2C_ManageAcking(pI2CHandle->pI2Cx,ENABLE);
+	}
+
+}
+
+void I2C_CloseSendData(I2C_Handle_t *pI2CHandle)
+{
+	//Implement the code to disable ITBUFEN Control Bit
+	pI2CHandle->pI2Cx->CR2 &= ~( 1 << I2C_CR2_ITBUFEN);
+
+	//Implement the code to disable ITEVFEN Control Bit
+	pI2CHandle->pI2Cx->CR2 &= ~( 1 << I2C_CR2_ITEVTEN);
+
+
+	pI2CHandle->TxRxState = I2C_READY;
+	pI2CHandle->pTxBuffer = NULL;
+	pI2CHandle->TxLen = 0;
+}
+
+
+void I2C_SlaveSendData(I2C_RegDef_t *pI2C,uint8_t data)
+{
+	pI2C->DR = data;
+}
+
+uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2C)
+{
+    return (uint8_t) pI2C->DR;
+}
+
+
