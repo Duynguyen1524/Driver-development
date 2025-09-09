@@ -432,7 +432,7 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle){
 				if(pI2CHandle->Sr = I2C_DISABLE_SR)
 					I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
 				// reset the member
-				I2C_CloseSendData();
+				I2C_CloseSendData(pI2CHandle);
 				I2C_ApplicationEventCallback(pI2CHandle, I2C_EV_TX_CMPLT);
 
 			}
@@ -553,7 +553,7 @@ void I2C_CloseReceiveData(I2C_Handle_t *pI2CHandle)
 	pI2CHandle->RxLen = 0;
 	pI2CHandle->RxSize = 0;
 
-	if(pI2CHandle->I2C_Config.I2C_AckControl == I2C_ACK_ENABLE)
+	if(pI2CHandle->I2C_Config.I2C_ACKControl == I2C_ACK_ENABLE)
 	{
 		I2C_ManageAcking(pI2CHandle->pI2Cx,ENABLE);
 	}
