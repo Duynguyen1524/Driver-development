@@ -15,5 +15,5 @@ This is my first low-level driver development project for the STM32 Nucleo Board
 |--------|----------|--------------------------------|
 | GPIO   | ✅ Done   | Supports input/output, AF, pull-up/down |
 | SPI    | ✅ Done   | Master mode, full-duplex, basic config |
-| I2C    | 🔄 In Progress | Working on master transmitter mode |
+| I2C    | ✅ Done | Master mode, slave mode, interrupt |
 | UART   | 🔄 In Progress | TX/RX polling under development |
